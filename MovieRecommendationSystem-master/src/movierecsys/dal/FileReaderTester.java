@@ -31,6 +31,8 @@ public class FileReaderTester
      */
     public static void main(String[] args) throws IOException
     {
+        MovieDAO modao = new MovieDAO();
         
+        modao.getAllMovies();
     }
 }
