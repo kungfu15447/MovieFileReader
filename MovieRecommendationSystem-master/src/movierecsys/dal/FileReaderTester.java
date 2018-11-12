@@ -38,8 +38,5 @@ public class FileReaderTester
         for (Movie allMov : allMovs) {
             System.out.println(allMov.getTitle());
         }
-
-        int x = 5;
-        
     }
 }
