@@ -32,7 +32,7 @@ public class FileReaderTester
     public static void main(String[] args) throws IOException
     {
         MovieDAO modao = new MovieDAO();
-        
-        modao.getAllMovies();
+        int x = 5;
+        modao.getAllMovies(); //hej test kldwflwækgf
     }
 }
