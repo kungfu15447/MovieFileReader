@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
+import movierecsys.be.Movie;
 
 /**
  *
@@ -32,7 +33,9 @@ public class FileReaderTester
     public static void main(String[] args) throws IOException
     {
         MovieDAO modao = new MovieDAO();
-        
-        modao.getAllMovies();
+        List<Movie> allMovs = modao.getAllMovies();
+        for (Movie allMov : allMovs) {
+            System.out.println(allMov.getTitle());
+        }
     }
 }
