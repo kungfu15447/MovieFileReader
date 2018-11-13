@@ -132,7 +132,7 @@ public class MovieDAO
         try
         {
             for (int i = 0; i < getAllMovies().size(); i++) {
-                if (!movie.getTitle().equals(getAllMovies().get(i).getTitle())) {
+                if (!getAllMovies().get(i).getTitle().equals(movie.getTitle())) {
                     newMovieList.add(getAllMovies().get(i));
                 }
             }
