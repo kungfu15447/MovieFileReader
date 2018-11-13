@@ -128,16 +128,17 @@ public class MovieDAO
         String tempFile = "temp.txt";
         File oldFile = new File(MOVIE_SOURCE);
         File newFile = new File(tempFile);
+        List<Movie> newMovieList = new ArrayList();
         try
         {
             for (int i = 0; i < getAllMovies().size(); i++) {
-                if (movie.getTitle().equals(getAllMovies().get(i).getTitle())) {
-                    getAllMovies().remove(i);
+                if (!movie.getTitle().equals(getAllMovies().get(i).getTitle())) {
+                    newMovieList.add(getAllMovies().get(i));
                 }
             }
             FileWriter fw = new FileWriter(tempFile);
             BufferedWriter bw = new BufferedWriter(fw);
-            for(Movie move : getAllMovies()) {
+            for(Movie move : newMovieList) {
                 bw.write(move.getId() + "," + move.getYear() + "," + move.getTitle());
             }
             bw.flush();
