@@ -26,14 +26,12 @@ public class FileReaderTester
     {
         MovieDAO movieDao = new MovieDAO();
 
-        Movie movie = movieDao.getMovie(1500); //Only run this once, or you will get multiple entries!
+        Movie movie = movieDao.getMovie(1501); //Only run this once, or you will get multiple entries!
         System.out.println(movie);
-
+         //Only run this once, or you will get multiple entries!
         Movie movie2 = new Movie(17771, 1966, "Django");
         movieDao.deleteMovie(movie2);
-        
-         //Only run this once, or you will get multiple entries!
-        
+
 
     }
 }
