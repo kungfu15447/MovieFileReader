@@ -27,6 +27,7 @@ public class FileReaderTester
         MovieDAO movieDao = new MovieDAO();
         Movie movie = new Movie(17771, 1966, "Django");
         movieDao.deleteMovie(movie);
+        
          //Only run this once, or you will get multiple entries!
         
     }
