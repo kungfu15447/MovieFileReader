@@ -9,7 +9,9 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.MalformedInputException;
 import java.nio.file.Files;
@@ -93,7 +95,7 @@ public class MovieDAO
     public Movie createMovie(int releaseYear, String title) throws IOException
     {
         Path path = new File(MOVIE_SOURCE).toPath();
-        int id = -1;
+        int id;
         try (BufferedWriter bw = Files.newBufferedWriter(path, StandardOpenOption.SYNC, StandardOpenOption.APPEND, StandardOpenOption.WRITE))
         {
             id = getNextAvailableMovieID();
@@ -123,7 +125,31 @@ public class MovieDAO
      */
     public void deleteMovie(Movie movie)
     {
-        //TODO Delete movie
+        String tempFile = "temp.txt";
+        File oldFile = new File(MOVIE_SOURCE);
+        File newFile = new File(tempFile);
+        try
+        {
+            for (int i = 0; i < getAllMovies().size(); i++) {
+                if (movie.getTitle().equals(getAllMovies().get(i).getTitle())) {
+                    getAllMovies().remove(i);
+                }
+            }
+            FileWriter fw = new FileWriter(tempFile);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for(Movie move : getAllMovies()) {
+                bw.write(move.getId() + "," + move.getYear() + "," + move.getTitle());
+            }
+            bw.flush();
+            bw.close();
+            oldFile.delete();
+            File dump = new File(MOVIE_SOURCE);
+            newFile.renameTo(dump);
+            
+        }
+        catch(Exception e){
+            System.out.println("Something went wrong");
+        }
     }
 
     /**
