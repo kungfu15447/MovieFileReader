@@ -123,7 +123,7 @@ public class MovieDAO
      *
      * @param movie The movie to delete.
      */
-    public void deleteMovie(Movie movie)
+    public void deleteMovie(Movie movie) throws IOException
     {
         String tempFile = "temp.txt";
         File oldFile = new File(MOVIE_SOURCE);
