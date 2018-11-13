@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.MalformedInputException;
 import java.nio.file.Files;
@@ -122,7 +123,7 @@ public class MovieDAO
      *
      * @param movie The movie to delete.
      */
-    private void deleteMovie(Movie movie)
+    public void deleteMovie(Movie movie)
     {
         String tempFile = "temp.txt";
         File oldFile = new File(MOVIE_SOURCE);
@@ -130,7 +131,7 @@ public class MovieDAO
         try
         {
             for (int i = 0; i < getAllMovies().size(); i++) {
-                if (movie.getId() == getAllMovies().get(i).getId()) {
+                if (movie.getTitle().equals(getAllMovies().get(i).getTitle())) {
                     getAllMovies().remove(i);
                 }
             }
