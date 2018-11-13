@@ -111,7 +111,7 @@ public class MovieDAO
      * @return
      * @throws IOException
      */
-    private int getNextAvailableMovieID() throws IOException
+    public int getNextAvailableMovieID() throws IOException
     {
         List<Movie> allMovies = getAllMovies();
         int highId = allMovies.get(allMovies.size() - 1).getId();
@@ -159,9 +159,9 @@ public class MovieDAO
      *
      * @param movie The updated movie.
      */
-    private void updateMovie(Movie movie)
+    public void updateMovie(Movie movie)
     {
-        //TODO Update movies
+        // TODO update movie
     }
 
     /**
@@ -170,10 +170,14 @@ public class MovieDAO
      * @param id ID of the movie.
      * @return A Movie object.
      */
-    private Movie getMovie(int id)
+    public Movie getMovie(int id) throws IOException
     {
-        //TODO Get one Movie
-        return null;
+        List<Movie> movieID = getAllMovies();
+        for (int i = 0; i < movieID.size(); i++){
+        if (id == movieID.get(i).getId()) {
+            return movieID.get(i);
+        }
     }
-
+        return null;
+}
 }
