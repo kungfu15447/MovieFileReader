@@ -30,6 +30,7 @@ public class RatingDAO
 {
 
     private static final String RATING_SOURCE = "data/user_ratings";
+    private static final String RATING_FILE = "data/ratings.txt";
 
     private static final int RECORD_SIZE = Integer.BYTES * 3;
 
@@ -40,7 +41,7 @@ public class RatingDAO
      */
     public void createRating(Rating rating) throws IOException
     {
-        Path path = new File(RATING_SOURCE).toPath();
+        Path path = new File(RATING_FILE).toPath();
         int movieId = rating.getMovie();
         int userId = rating.getUser();
         int ratingScore = rating.getRating();
@@ -106,7 +107,7 @@ public class RatingDAO
     public void deleteRating(Rating rating) throws IOException
     {
         String tempFile = "temp.txt";
-        File oldFile = new File(RATING_SOURCE);
+        File oldFile = new File(RATING_FILE);
         File newFile = new File(tempFile);
         List<Rating> newRatingList = getAllRatings();
         try {
