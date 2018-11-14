@@ -109,6 +109,9 @@ public class UserDAO
             }
             bw.flush();
             bw.close();
+            oldFile.delete();
+            File dump = new File(originalFile);
+            newFile.renameTo(dump);
         }
         catch (IOException x) {
             System.out.println("Something went wrong");
