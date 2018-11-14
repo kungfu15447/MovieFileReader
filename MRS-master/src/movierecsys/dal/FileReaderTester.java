@@ -29,10 +29,9 @@ public class FileReaderTester
     {
         RatingDAO ratingDao = new RatingDAO();
         Rating rate = new Rating(8, 1744889, -5);
-        List<Rating> ratingList = ratingDao.getAllRatings();
-        for (Rating rates : ratingList) {
-            System.out.println("R: " + rates.getMovie()+ "," + rates.getUser() + "," + rates.getRating());
-        }
+        ratingDao.deleteRating(rate);
+        
+        
         
     }
     public static void createRafFriendlyRatingsFile() throws IOException
@@ -57,7 +56,7 @@ public class FileReaderTester
     public void movieDAOMethods() throws IOException {
         MovieDAO movieDao = new MovieDAO();
 
-        Movie movie = movieDao.getMovie(1501); //Only run this once, or you will get multiple entries!
+        Movie movie = movieDao.getMovie(1501);
         System.out.println(movie);
         System.out.println("Hej");
          //Only run this once, or you will get multiple entries!
