@@ -6,8 +6,10 @@
 package movierecsys.dal;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,9 +55,6 @@ public class UserDAO
         return users;
     }
     
-    
-    
-    
     private User stringArrayToUser(String line)
     {
         String[] arrUser = line.split(",");
@@ -70,20 +69,50 @@ public class UserDAO
      * Gets a single User by its ID.
      * @param id The ID of the user.
      * @return The User with the ID.
+     * @throws java.io.IOException
      */
-    public User getUser(int id)
+    public User getUser(int id) throws IOException
     {
-        //TODO Get User
-        return null;
+        List<User> userIdList = getAllUsers();
+        for (User user : userIdList) {
+            if (user.getId() == id) {
+                return user;
+            }
+        }
+        throw new IllegalArgumentException("No user with the ID " + id + " was found.");
     }
     
     /**
      * Updates a user so the persistence storage reflects the given User object.
      * @param user The updated user.
+     * @throws java.io.IOException
      */
-    public void updateUser(User user)
+    public void updateUser(User user) throws IOException
     {
-        //TODO Update user.
+        String tempFile = "temp.txt";
+        String originalFile = "data/users.txt";
+        File oldFile = new File(originalFile);
+        File newFile = new File(tempFile);
+        List<User> newUserList = getAllUsers();
+        
+        try {
+            FileWriter fw = new FileWriter(tempFile);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for (User uses : newUserList) {
+                if (uses.getId() == user.getId()) {
+                    bw.write(user.getId() + "," + user.getName());
+                    bw.newLine();
+                }else {
+                    bw.write(uses.getId() + "," + uses.getName());
+                    bw.newLine();
+                }
+            }
+            bw.flush();
+            bw.close();
+        }
+        catch (IOException x) {
+            System.out.println("Something went wrong");
+        }
     }
     
 }

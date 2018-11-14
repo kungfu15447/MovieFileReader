@@ -204,6 +204,6 @@ public class MovieDAO
             return movieID.get(i);
         }
     }
-        return null;
+        throw new IllegalArgumentException("No movie with the ID " + id + " was found.");
 }
 }

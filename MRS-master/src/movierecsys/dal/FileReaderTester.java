@@ -24,6 +24,11 @@ public class FileReaderTester
      */
     public static void main(String[] args) throws IOException
     {
+        
+
+
+    }
+    public void movieDAOMethods() throws IOException {
         MovieDAO movieDao = new MovieDAO();
 
         Movie movie = movieDao.getMovie(1501); //Only run this once, or you will get multiple entries!
@@ -34,7 +39,9 @@ public class FileReaderTester
         movieDao.updateMovie(movie2);
         
         System.exit(0);
-
-
+    }
+    
+    public void userDAOMethods() throws IOException {
+        
     }
 }
