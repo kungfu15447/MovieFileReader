@@ -129,17 +129,19 @@ public class MovieDAO
         File oldFile = new File(MOVIE_SOURCE);
         File newFile = new File(tempFile);
         List<Movie> newMovieList = new ArrayList();
+        List<Movie> oldMovieList = getAllMovies();
         try
         {
-            for (int i = 0; i < getAllMovies().size(); i++) {
-                if (!getAllMovies().get(i).getTitle().equals(movie.getTitle())) {
-                    newMovieList.add(getAllMovies().get(i));
+            for (int i = 0; i < oldMovieList.size(); i++) {
+                if (oldMovieList.get(i).getId() != movie.getId()) {
+                    newMovieList.add(oldMovieList.get(i));
                 }
             }
             FileWriter fw = new FileWriter(tempFile);
             BufferedWriter bw = new BufferedWriter(fw);
             for(Movie move : newMovieList) {
                 bw.write(move.getId() + "," + move.getYear() + "," + move.getTitle());
+                bw.newLine();
             }
             bw.flush();
             bw.close();
@@ -148,7 +150,7 @@ public class MovieDAO
             newFile.renameTo(dump);
             
         }
-        catch(Exception e){
+        catch(IOException e){
             System.out.println("Something went wrong");
         }
     }
