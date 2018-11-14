@@ -109,7 +109,8 @@ public class RatingDAO
         String tempFile = "temp.txt";
         File oldFile = new File(RATING_FILE);
         File newFile = new File(tempFile);
-        List<Rating> newRatingList = getAllRatings();
+        List<Rating> newRatingList = new ArrayList<>();
+        newRatingList = getAllRatings();
         try {
             FileWriter fw = new FileWriter(tempFile);
             BufferedWriter bw = new BufferedWriter(fw);
