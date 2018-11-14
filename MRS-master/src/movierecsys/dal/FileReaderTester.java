@@ -6,8 +6,10 @@
 package movierecsys.dal;
 
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.List;
 import movierecsys.be.Movie;
+import movierecsys.be.Rating;
 import movierecsys.be.User;
 
 /**
@@ -25,7 +27,32 @@ public class FileReaderTester
      */
     public static void main(String[] args) throws IOException
     {
+        RatingDAO ratingDao = new RatingDAO();
+        Rating rate = new Rating(8, 1744889, -5);
+        List<Rating> ratingList = ratingDao.getAllRatings();
+        for (Rating rates : ratingList) {
+            System.out.println("R: " + rates.getMovie()+ "," + rates.getUser() + "," + rates.getRating());
+        }
         
+    }
+    public static void createRafFriendlyRatingsFile() throws IOException
+    {
+        String target = "data/ratings.txt";
+        RatingDAO ratingDao = new RatingDAO();
+        List<Rating> all = ratingDao.getAllRatings();
+        
+        try (RandomAccessFile raf = new RandomAccessFile(target, "rw"))
+        {
+            for (Rating rating : all)
+            {
+                raf.writeInt(rating.getMovie());
+                raf.writeInt(rating.getUser());
+                raf.writeInt(rating.getRating());
+            }
+        } catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
     }
     public void movieDAOMethods() throws IOException {
         MovieDAO movieDao = new MovieDAO();

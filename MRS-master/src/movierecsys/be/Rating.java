@@ -25,8 +25,8 @@ public class Rating
     /**
      * Constructs a new rating.
      *
-     * @param movieId The movie being rateds Id.
-     * @param userId The rating users Id.
+     * @param movieId The movie being rateds id
+     * @param userId The rating users id
      * @param rating The value of the rating. Only the constants of the Rating
      * class are allowed values.
      */
