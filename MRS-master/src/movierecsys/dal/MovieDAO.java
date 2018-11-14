@@ -161,9 +161,33 @@ public class MovieDAO
      *
      * @param movie The updated movie.
      */
-    public void updateMovie(Movie movie)
+    public void updateMovie(Movie movie) throws IOException
     {
-        // TODO update movie
+        String tempFile = "temp.txt";
+        File oldFile = new File(MOVIE_SOURCE);
+        File newFile = new File(tempFile);
+        List<Movie> oldMovieList = getAllMovies();
+        try {
+            FileWriter fw = new FileWriter(tempFile);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for (Movie move : oldMovieList) {
+                if (movie.getId() == move.getId()) {
+                    bw.write(movie.getId() + "," + movie.getYear() + "," + movie.getTitle());
+                    bw.newLine();
+                }else {
+                    bw.write(move.getId() + "," + move.getYear() + "," + move.getTitle());
+                    bw.newLine();
+                }  
+            }
+            bw.flush();
+            bw.close();
+            oldFile.delete();
+            File dump = new File(MOVIE_SOURCE);
+            newFile.renameTo(dump);
+        }
+        catch (Exception x) {
+            System.out.println("Something went wrong");
+        }
     }
 
     /**

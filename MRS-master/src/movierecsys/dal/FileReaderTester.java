@@ -30,8 +30,8 @@ public class FileReaderTester
         System.out.println(movie);
         System.out.println("Hej");
          //Only run this once, or you will get multiple entries!
-        Movie movie2 = new Movie(17771, 1966, "Django");
-        movieDao.deleteMovie(movie2);
+        Movie movie2 = new Movie(1, 2003, "Dinosaur Planet");
+        movieDao.updateMovie(movie2);
         
         System.exit(0);
 
