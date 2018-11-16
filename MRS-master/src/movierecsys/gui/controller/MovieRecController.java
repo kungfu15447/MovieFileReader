@@ -7,8 +7,10 @@ package movierecsys.gui.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import movierecsys.be.Movie;
@@ -31,6 +33,8 @@ public class MovieRecController implements Initializable
      */
     @FXML
     private ListView<Movie> lstMovies;
+    @FXML
+    private Button btnSearch;
 
     
     @Override
@@ -42,6 +46,10 @@ public class MovieRecController implements Initializable
     
     public void movieData() {
         
+    }
+
+    @FXML
+    private void movieSearch(ActionEvent event) {
     }
 
 }
