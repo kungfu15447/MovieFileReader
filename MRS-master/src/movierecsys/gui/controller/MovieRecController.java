@@ -39,5 +39,9 @@ public class MovieRecController implements Initializable
        
         
     }
+    
+    public void movieData() {
+        
+    }
 
 }

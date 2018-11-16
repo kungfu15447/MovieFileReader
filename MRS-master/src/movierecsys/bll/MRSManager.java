@@ -6,10 +6,13 @@
 
 package movierecsys.bll;
 
+import java.io.IOException;
 import java.util.List;
 import movierecsys.be.Movie;
 import movierecsys.be.Rating;
 import movierecsys.be.User;
+import movierecsys.bll.exception.MovieRecSysException;
+import movierecsys.dal.MovieDAO;
 
 /**
  *
@@ -17,6 +20,11 @@ import movierecsys.be.User;
  */
 public class MRSManager implements MRSOwsLogicFacade {
 
+    private MovieDAO modao;
+    
+    public MRSManager() {
+        modao = new MovieDAO();
+    }
     @Override
     public List<Rating> getRecommendedMovies(User user)
     {
@@ -81,6 +89,17 @@ public class MRSManager implements MRSOwsLogicFacade {
     public List<User> getAllUsers()
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Movie> getAllMovies() throws MovieRecSysException
+    {
+        try {
+        return modao.getAllMovies();
+        }
+        catch (IOException x) {
+            throw new MovieRecSysException("Could not show all movies becuase of error: " + x);
+        }
     }
 
 }
