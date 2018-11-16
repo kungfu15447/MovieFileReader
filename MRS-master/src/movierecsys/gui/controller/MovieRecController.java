@@ -50,7 +50,7 @@ public class MovieRecController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        movieData();
+        
     }
     
     public void movieData() {
@@ -59,6 +59,8 @@ public class MovieRecController implements Initializable
 
     @FXML
     private void movieSearch(ActionEvent event) {
+        lstMovies.setItems(movieModel.searchMovie(movieModel.getMovieList(), txtMovieSearcjh.getText()));
+        
     }
 
 }

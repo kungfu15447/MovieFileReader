@@ -14,6 +14,7 @@ import movierecsys.be.Movie;
 import movierecsys.bll.MRSManager;
 import movierecsys.bll.MRSOwsLogicFacade;
 import movierecsys.bll.exception.MovieRecSysException;
+import movierecsys.bll.util.MovieSearcher;
 import movierecsys.dal.MovieDAO;
 
 /**
@@ -24,14 +25,22 @@ public class MovieRecModel
 {
     private ObservableList<Movie> movieList;
     private MRSOwsLogicFacade logiclayer;
+    private MovieSearcher search;
     
     public MovieRecModel() throws MovieRecSysException {
         movieList = FXCollections.observableArrayList();
         logiclayer = new MRSManager();
         movieList.addAll(logiclayer.getAllMovies());
+        search = new MovieSearcher();
     }
     
     public ObservableList<Movie> getMovieList() {
         return movieList;
+    }
+    
+    public ObservableList<Movie> searchMovie (List<Movie> searchBase, String query) {
+        ObservableList<Movie> searchedMovieList = FXCollections.observableArrayList();
+        searchedMovieList.addAll(search.search(searchBase, query));
+        return searchedMovieList;
     }
 }
