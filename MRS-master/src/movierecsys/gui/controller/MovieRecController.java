@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import movierecsys.be.Movie;
+import movierecsys.bll.exception.MovieRecSysException;
 
 /**
  *
@@ -32,16 +33,24 @@ public class MovieRecController implements Initializable
     @FXML
     private ListView<Movie> lstMovies;
 
+    private MovieRecModel movieModel;
+    
+    public MovieRecController() throws MovieRecSysException {
+        try {
+        movieModel = new MovieRecModel();
+        } catch(MovieRecSysException x) {
+            
+        }
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-       
-        
+        movieData();
     }
     
     public void movieData() {
-        
+        lstMovies.setItems(movieModel.getMovieList());
     }
 
 }

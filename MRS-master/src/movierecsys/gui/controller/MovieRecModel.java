@@ -11,6 +11,9 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import movierecsys.be.Movie;
+import movierecsys.bll.MRSManager;
+import movierecsys.bll.MRSOwsLogicFacade;
+import movierecsys.bll.exception.MovieRecSysException;
 import movierecsys.dal.MovieDAO;
 
 /**
@@ -20,20 +23,15 @@ import movierecsys.dal.MovieDAO;
 public class MovieRecModel
 {
     private ObservableList<Movie> movieList;
+    private MRSOwsLogicFacade logiclayer;
     
-    public MovieRecModel() {
+    public MovieRecModel() throws MovieRecSysException {
         movieList = FXCollections.observableArrayList();
+        logiclayer = new MRSManager();
+        movieList.addAll(logiclayer.getAllMovies());
     }
     
-    public List<Movie> getMovieList() throws IOException {
-        MovieDAO modao = new MovieDAO();
-        List<Movie> modaoList = new ArrayList();
-        modaoList = modao.getAllMovies();
-        
-        for (Movie m : modaoList) {
-            movieList.add(m);
-        }
-        
+    public ObservableList<Movie> getMovieList() {
         return movieList;
     }
 }
