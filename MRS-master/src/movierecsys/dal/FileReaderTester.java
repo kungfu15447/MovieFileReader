@@ -5,8 +5,14 @@
  */
 package movierecsys.dal;
 
+import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import movierecsys.be.Movie;
 import movierecsys.be.Rating;
@@ -27,12 +33,63 @@ public class FileReaderTester
      */
     public static void main(String[] args) throws IOException
     {
-        RatingDAO ratingDao = new RatingDAO();
-        Rating rate = new Rating(40, 1744889, 2);
-        ratingDao.deleteRating(rate);
+        migrateUsers();
+    }
+    
+    public static void migrateMovies() throws IOException {
+        MovieDAO modao = new MovieDAO();
+        SQLServerDataSource ds = new SQLServerDataSource();
+        ds.setServerName("10.176.111.31");
+        ds.setDatabaseName("moviesrs");
+        ds.setUser("CS2018A_11");
+        ds.setPassword("CS2018A_11");
         
+        List<Movie> movies = new ArrayList<>();
+        movies = modao.getAllMovies();
         
+        try(Connection con = ds.getConnection()) 
+        {
+            Statement statement = con.createStatement();
+            for (Movie movie : movies) {
+                String sql = "INSERT INTO Movie (id,year,title) VALUES(" 
+                        + movie.getId() + "," 
+                        + movie.getYear() + ",'" 
+                        + movie.getTitle().replace("'", "") + "');";
+                System.out.print(sql);
+                int i = statement.executeUpdate(sql);
+                System.out.println("Affected row: " + i);
+            }
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    public static void migrateUsers() throws IOException {
+        UserDAO udao = new UserDAO();
+        SQLServerDataSource ds = new SQLServerDataSource();
+        ds.setServerName("10.176.111.31");
+        ds.setDatabaseName("moviesrs");
+        ds.setUser("CS2018A_11");
+        ds.setPassword("CS2018A_11");
         
+        List<User> users = new ArrayList<>();
+        users = udao.getAllUsers();
+        
+        try (Connection con = ds.getConnection()) {
+            Statement statement = con.createStatement();
+            for (User user : users) {
+                String sql = "INSERT INTO User (id,name) VALUES("
+                        + user.getId() + ",'" 
+                        + user.getName() + "');";
+                System.out.println(sql);
+                int i = statement.executeUpdate("INSERT INTO Users (id,name) VALUES("
+                        + user.getId() + ",'"
+                        + user.getName() + "');");
+                System.out.println("Affected row: " + i);
+            }
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
     public static void createRafFriendlyRatingsFile() throws IOException
     {
