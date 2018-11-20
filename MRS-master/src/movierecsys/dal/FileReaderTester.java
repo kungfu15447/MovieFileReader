@@ -64,30 +64,40 @@ public class FileReaderTester
             ex.printStackTrace();
         }
     }
-    public static void migrateUsers() throws IOException {
-        UserDAO udao = new UserDAO();
+    public static void migrateUsers() throws IOException
+    {
         SQLServerDataSource ds = new SQLServerDataSource();
         ds.setServerName("10.176.111.31");
-        ds.setDatabaseName("moviesrs");
-        ds.setUser("CS2018A_11");
-        ds.setPassword("CS2018A_11");
-        
-        List<User> users = new ArrayList<>();
-        users = udao.getAllUsers();
-        
-        try (Connection con = ds.getConnection()) {
+        ds.setDatabaseName("Netflix");
+        ds.setUser("CS2018A_14");
+        ds.setPassword("CS2018A_14");
+
+        List<User> users = new UserDAO().getAllUsers();
+
+        try (Connection con = ds.getConnection())
+        {
             Statement statement = con.createStatement();
-            for (User user : users) {
-                String sql = "INSERT INTO User (id,name) VALUES("
-                        + user.getId() + ",'" 
-                        + user.getName() + "');";
-                System.out.println(sql);
-                int i = statement.executeUpdate("INSERT INTO Users (id,name) VALUES("
+            int counter = 0;
+            for (User user : users)
+            {
+                String sql = "INSERT INTO [User] (id,name) VALUES("
                         + user.getId() + ",'"
-                        + user.getName() + "');");
-                System.out.println("Affected row: " + i);
+                        + user.getName() + "');";
+                statement.addBatch(sql);
+                counter++;
+                if (counter % 1000 == 0)
+                {
+                    statement.executeBatch();
+                    System.out.println("Added 1000 users.");
+                }
             }
-        }catch (SQLException ex) {
+            if (counter % 1000 != 0)
+            {
+                statement.executeBatch();
+                System.out.println("Added final batch of users.");
+            }
+        } catch (SQLException ex)
+        {
             ex.printStackTrace();
         }
     }
