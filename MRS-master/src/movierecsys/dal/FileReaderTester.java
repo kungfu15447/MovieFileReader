@@ -33,7 +33,7 @@ public class FileReaderTester
      */
     public static void main(String[] args) throws IOException
     {
-        migrateUsers();
+        migrateRatings();
     }
     
     public static void migrateMovies() throws IOException {
@@ -89,6 +89,31 @@ public class FileReaderTester
             }
         }catch (SQLException ex) {
             ex.printStackTrace();
+        }
+    }
+    public static void migrateRatings() throws IOException {
+        RatingDAO rdao = new RatingDAO();
+        SQLServerDataSource ds = new SQLServerDataSource();
+        ds.setServerName("10.176.111.31");
+        ds.setDatabaseName("moviesrs");
+        ds.setUser("CS2018A_11");
+        ds.setPassword("CS2018A_11");
+        List<Rating> ratings = new ArrayList<>();
+        ratings = rdao.getAllRatings();
+        
+        try (Connection con = ds.getConnection()){
+            Statement statement = con.createStatement();
+            for (Rating rating : ratings) {
+                String sql = "INSERT INTO Rating (movieId,userId,rating) VALUES("
+                    + rating.getMovie() + ","
+                    + rating.getUser() + ","
+                    + rating.getRating() + ");";
+                System.out.println(sql);
+                int i = statement.executeUpdate(sql);
+                System.out.println("Affected row: " + i);
+            }
+        }catch (SQLException ex) {
+            
         }
     }
     public static void createRafFriendlyRatingsFile() throws IOException
