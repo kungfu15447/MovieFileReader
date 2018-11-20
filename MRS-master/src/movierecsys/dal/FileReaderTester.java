@@ -33,7 +33,7 @@ public class FileReaderTester
      */
     public static void main(String[] args) throws IOException
     {
-        migrateRatings();
+        
     }
     
     public static void migrateMovies() throws IOException {
@@ -64,68 +64,46 @@ public class FileReaderTester
             ex.printStackTrace();
         }
     }
-    public static void migrateUsers() throws IOException
+    public static void migrateRatings() throws IOException
     {
+        
         SQLServerDataSource ds = new SQLServerDataSource();
         ds.setServerName("10.176.111.31");
-        ds.setDatabaseName("Netflix");
-        ds.setUser("CS2018A_14");
-        ds.setPassword("CS2018A_14");
+        ds.setDatabaseName("moviesrs");
+        ds.setUser("CS2018A_11");
+        ds.setPassword("CS2018A_11");
 
-        List<User> users = new UserDAO().getAllUsers();
+        List<Rating> ratings = new RatingDAO().getAllRatings();
 
         try (Connection con = ds.getConnection())
         {
             Statement statement = con.createStatement();
             int counter = 0;
-            for (User user : users)
+            for (Rating rating : ratings)
             {
-                String sql = "INSERT INTO [User] (id,name) VALUES("
-                        + user.getId() + ",'"
-                        + user.getName() + "');";
+                String sql = "INSERT INTO Rating (movieId,userId,rating) VALUES("
+                        + rating.getMovie() + ","
+                        + rating.getUser() + 
+                        + rating.getRating() + ");";
                 statement.addBatch(sql);
                 counter++;
-                if (counter % 1000 == 0)
+                if (counter % 10000 == 0)
                 {
                     statement.executeBatch();
-                    System.out.println("Added 1000 users.");
+                    System.out.println("Added 1000 ratings.");
                 }
             }
-            if (counter % 1000 != 0)
+            if (counter % 10000 != 0)
             {
                 statement.executeBatch();
-                System.out.println("Added final batch of users.");
+                System.out.println("Added final batch of ratings.");
             }
         } catch (SQLException ex)
         {
             ex.printStackTrace();
         }
     }
-    public static void migrateRatings() throws IOException {
-        RatingDAO rdao = new RatingDAO();
-        SQLServerDataSource ds = new SQLServerDataSource();
-        ds.setServerName("10.176.111.31");
-        ds.setDatabaseName("moviesrs");
-        ds.setUser("CS2018A_11");
-        ds.setPassword("CS2018A_11");
-        List<Rating> ratings = new ArrayList<>();
-        ratings = rdao.getAllRatings();
-        
-        try (Connection con = ds.getConnection()){
-            Statement statement = con.createStatement();
-            for (Rating rating : ratings) {
-                String sql = "INSERT INTO Rating (movieId,userId,rating) VALUES("
-                    + rating.getMovie() + ","
-                    + rating.getUser() + ","
-                    + rating.getRating() + ");";
-                System.out.println(sql);
-                int i = statement.executeUpdate(sql);
-                System.out.println("Affected row: " + i);
-            }
-        }catch (SQLException ex) {
-            
-        }
-    }
+    
     public static void createRafFriendlyRatingsFile() throws IOException
     {
         String target = "data/ratings.txt";
