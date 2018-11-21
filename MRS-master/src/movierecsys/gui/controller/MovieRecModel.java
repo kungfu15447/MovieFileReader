@@ -43,4 +43,6 @@ public class MovieRecModel
         searchedMovieList.addAll(search.search(searchBase, query));
         return searchedMovieList;
     }
+    
+    
 }

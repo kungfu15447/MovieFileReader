@@ -33,7 +33,7 @@ public class FileReaderTester
      */
     public static void main(String[] args) throws IOException
     {
-        
+        migrateMovies();
     }
     
     public static void migrateMovies() throws IOException {
