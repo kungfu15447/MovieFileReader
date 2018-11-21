@@ -8,6 +8,7 @@ package movierecsys.dal;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -96,7 +97,19 @@ public class MovieDBDAO implements IMovieRepository
     @Override
     public void updateMovie(Movie movie) throws IOException
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    try(Connection con = dbc.getConnection())
+    {
+    Statement statement = con.createStatement();
+    String sql = "UPDATE Movie SET title = " +
+            movie.getTitle() + ", year = " +
+            movie.getYear() + "WHERE id = " + 
+            movie.getId() + ";";
+    statement.executeQuery(sql);
     
-}
+    } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+       
+    }
+}  
+
