@@ -50,7 +50,7 @@ public class MovieDBDAO implements IMovieRepository
     {
         try (Connection con = dbc.getConnection()) {
             Statement statement = con.createStatement();
-            String sql = "DELETE FROM Movie WHERE title = '" + movie.getTitle() +"';";
+            String sql = "DELETE FROM Movie WHERE id = '" + movie.getId() +"';";
             statement.executeUpdate(sql);
         }catch (SQLException ex) {
             ex.printStackTrace();
@@ -85,15 +85,19 @@ public class MovieDBDAO implements IMovieRepository
         try (Connection con = dbc.getConnection()) {
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM Movie WHERE id = " + id + ";");
+            if (rs.next()) {
             int movieId = rs.getInt("id");
             int year = rs.getInt("year");
             String title = rs.getString("title");
             Movie movie = new Movie(movieId,year,title);
             return movie;
+            }else {
+                return null;
+            }
         }catch (SQLException ex) {
             ex.printStackTrace();
         }
-        throw new IllegalArgumentException("No movie with the ID " + id + " was found.");
+        return null;
     }
 
     @Override

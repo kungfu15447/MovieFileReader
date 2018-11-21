@@ -8,11 +8,14 @@ package movierecsys.bll;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import movierecsys.be.Movie;
 import movierecsys.be.Rating;
 import movierecsys.be.User;
 import movierecsys.bll.exception.MovieRecSysException;
 import movierecsys.dal.MovieDAO;
+import movierecsys.dal.MovieDBDAO;
 
 /**
  *
@@ -21,9 +24,11 @@ import movierecsys.dal.MovieDAO;
 public class MRSManager implements MRSOwsLogicFacade {
 
     private MovieDAO modao;
+    private MovieDBDAO dodao;
     
     public MRSManager() {
         modao = new MovieDAO();
+        dodao = new MovieDBDAO();
     }
     @Override
     public List<Rating> getRecommendedMovies(User user)
@@ -52,7 +57,16 @@ public class MRSManager implements MRSOwsLogicFacade {
     @Override
     public Movie createMovie(int year, String title)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try
+        {
+            int id = dodao.getNextAvailableMovieID();
+            dodao.createMovie(year, title);
+            return new Movie(id, year, title);
+        } catch (IOException ex)
+        {
+            
+        }
+        return null;
     }
 
     @Override
@@ -64,7 +78,13 @@ public class MRSManager implements MRSOwsLogicFacade {
     @Override
     public void deleteMovie(Movie movie)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try
+        {
+            dodao.deleteMovie(movie);
+        } catch (IOException ex)
+        {
+            
+        }
     }
 
     @Override
@@ -95,7 +115,7 @@ public class MRSManager implements MRSOwsLogicFacade {
     public List<Movie> getAllMovies() throws MovieRecSysException
     {
         try {
-        return modao.getAllMovies();
+        return dodao.getAllMovies();
         }
         catch (IOException x) {
             throw new MovieRecSysException("Could not show all movies becuase of error: " + x);
