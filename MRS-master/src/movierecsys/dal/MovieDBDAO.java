@@ -22,31 +22,47 @@ import movierecsys.be.Movie;
  */
 public class MovieDBDAO implements IMovieRepository
 {
+    private final DBConnection dbc;
+    public MovieDBDAO() {
+        dbc = new DBConnection();
+    }
 
     @Override
     public Movie createMovie(int releaseYear, String title) throws IOException
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int id = getNextAvailableMovieID();
+        try (Connection con = dbc.getConnection()) {
+            Statement statement = con.createStatement();
+            String sql = "INSERT INTO Movie (id,year,title) VALUES("
+                    + id + ","
+                    + releaseYear + ",'"
+                    + title + "');";
+            statement.executeUpdate(sql);
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        Movie movie = new Movie(id, releaseYear, title);
+        return movie;
     }
 
     @Override
     public void deleteMovie(Movie movie) throws IOException
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection con = dbc.getConnection()) {
+            Statement statement = con.createStatement();
+            String sql = "DELETE FROM Movie WHERE title = " + movie.getTitle() +";";
+            statement.executeUpdate(sql);
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public List<Movie> getAllMovies() throws IOException
     {
-        SQLServerDataSource ds = new SQLServerDataSource();
-        ds.setServerName("10.176.111.31");
-        ds.setDatabaseName("moviesrs");
-        ds.setUser("CS2018A_11");
-        ds.setPassword("CS2018A_11");
-        
         List<Movie> movies = new ArrayList<>();
         
-        try(Connection con = ds.getConnection()) 
+        try(Connection con = dbc.getConnection()) 
         {
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM Movie;");
@@ -72,7 +88,9 @@ public class MovieDBDAO implements IMovieRepository
     @Override
     public int getNextAvailableMovieID() throws IOException
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Movie> allMovies = getAllMovies();
+        int highId = allMovies.get(allMovies.size() - 1).getId();
+        return highId + 1;
     }
 
     @Override
