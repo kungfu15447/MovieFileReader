@@ -50,7 +50,7 @@ public class MovieDBDAO implements IMovieRepository
     {
         try (Connection con = dbc.getConnection()) {
             Statement statement = con.createStatement();
-            String sql = "DELETE FROM Movie WHERE title = " + movie.getTitle() +";";
+            String sql = "DELETE FROM Movie WHERE title = '" + movie.getTitle() +"';";
             statement.executeUpdate(sql);
         }catch (SQLException ex) {
             ex.printStackTrace();
@@ -69,8 +69,8 @@ public class MovieDBDAO implements IMovieRepository
             while (rs.next()) {
                 int id = rs.getInt("id");
                 int year = rs.getInt("year");
-                String name = rs.getString("name");
-                Movie movie = new Movie(id, year, name);
+                String title = rs.getString("title");
+                Movie movie = new Movie(id, year, title);
                 movies.add(movie);
             }
         } catch (SQLException ex) {
@@ -82,7 +82,18 @@ public class MovieDBDAO implements IMovieRepository
     @Override
     public Movie getMovie(int id) throws IOException
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection con = dbc.getConnection()) {
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT * FROM Movie WHERE id = " + id + ";");
+            int movieId = rs.getInt("id");
+            int year = rs.getInt("year");
+            String title = rs.getString("title");
+            Movie movie = new Movie(movieId,year,title);
+            return movie;
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        throw new IllegalArgumentException("No movie with the ID " + id + " was found.");
     }
 
     @Override
