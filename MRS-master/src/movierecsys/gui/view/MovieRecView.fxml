@@ -1,39 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="movierecsys.gui.controller.MovieRecController">
-   <top>
-      <VBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Movie Recommendation System" textAlignment="CENTER" VBox.vgrow="ALWAYS">
-               <font>
-                  <Font name="Book Antiqua Bold" size="30.0" />
-               </font>
-            </Label>
-         </children>
-         <padding>
-            <Insets bottom="10.0" />
-         </padding>
-         <BorderPane.margin>
-            <Insets left="5.0" right="5.0" />
-         </BorderPane.margin>
-      </VBox>
-   </top>
-   <center>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
-         <children>
-            <TextField fx:id="txtMovieSearcjh" promptText="search movies" />
-            <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#movieSearch" prefHeight="25.0" prefWidth="456.0" text="Search" />
-            <ListView fx:id="lstMovies" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
-         </children>
-      </VBox>
-   </center>
-</BorderPane>
+
+<AnchorPane prefHeight="662.0" prefWidth="935.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="movierecsys.gui.controller.MovieRecController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="14.0" maxWidth="1.7976931348623157E308" prefHeight="39.0" prefWidth="473.0" text="Movie Recommendation System" textAlignment="CENTER">
+         <font>
+            <Font name="Book Antiqua Bold" size="30.0" />
+         </font>
+      </Label>
+      <ListView fx:id="lstMovies" layoutY="150.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="512.0" prefWidth="407.0" />
+      <TextField fx:id="txtMovieSearcjh" layoutY="84.0" prefHeight="33.0" prefWidth="407.0" promptText="search movies" />
+      <Button fx:id="btnSearch" layoutY="117.0" mnemonicParsing="false" onAction="#movieSearch" prefHeight="33.0" prefWidth="98.0" text="Search" />
+      <Line endX="301.7070617675781" endY="14.292877197265625" layoutX="106.0" layoutY="69.0" startX="-105.99999237060547" startY="15.0" />
+      <Line endX="-114.60000610351562" endY="458.0" layoutX="521.0" layoutY="204.0" startX="-114.00003051757812" startY="-120.0" />
+      <TextField fx:id="txtMovieName" layoutX="439.0" layoutY="150.0" prefHeight="26.0" prefWidth="222.0" />
+      <TextField fx:id="txtMovieYear" layoutX="439.0" layoutY="214.0" prefHeight="26.0" prefWidth="222.0" />
+      <Label layoutX="439.0" layoutY="81.0" prefHeight="39.0" prefWidth="183.0" text="Create a movie" />
+      <Label layoutX="439.0" layoutY="134.0" text="Name of the movie" />
+      <Label layoutX="439.0" layoutY="193.0" text="Release year of the movie" />
+      <Label fx:id="lblUpdateOutput" layoutX="439.0" layoutY="307.0" prefHeight="50.0" prefWidth="222.0" text="Label" />
+      <Button fx:id="btnCreateMovie" layoutX="441.0" layoutY="255.0" mnemonicParsing="false" onAction="#CreateMovieHandler" text="Create movie" />
+   </children>
+</AnchorPane>

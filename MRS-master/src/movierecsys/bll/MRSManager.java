@@ -115,7 +115,7 @@ public class MRSManager implements MRSOwsLogicFacade {
     public List<Movie> getAllMovies() throws MovieRecSysException
     {
         try {
-        return dodao.getAllMovies();
+        return modao.getAllMovies();
         }
         catch (IOException x) {
             throw new MovieRecSysException("Could not show all movies becuase of error: " + x);

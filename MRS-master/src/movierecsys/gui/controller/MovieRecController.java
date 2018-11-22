@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import movierecsys.be.Movie;
@@ -38,6 +39,14 @@ public class MovieRecController implements Initializable
     private Button btnSearch;
 
     private MovieRecModel movieModel;
+    @FXML
+    private TextField txtMovieName;
+    @FXML
+    private TextField txtMovieYear;
+    @FXML
+    private Label lblUpdateOutput;
+    @FXML
+    private Button btnCreateMovie;
     
     public MovieRecController() throws MovieRecSysException {
         try {
@@ -60,6 +69,16 @@ public class MovieRecController implements Initializable
     @FXML
     private void movieSearch(ActionEvent event) {
         lstMovies.setItems(movieModel.searchMovie(movieModel.getMovieList(), txtMovieSearcjh.getText()));
+        
+    }
+
+    @FXML
+    private void CreateMovieHandler(ActionEvent event)
+    {
+        String movieName = txtMovieName.getText();
+        int movieYear = Integer.parseInt(txtMovieYear.getText());
+        movieModel.createMovie(movieYear, movieName);
+        lblUpdateOutput.setText("The movie " + movieName + " has been put into the Movie database!");
         
     }
 

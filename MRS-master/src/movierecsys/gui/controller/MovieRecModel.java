@@ -44,5 +44,7 @@ public class MovieRecModel
         return searchedMovieList;
     }
     
-    
+    public Movie createMovie(int year, String title) {
+        return logiclayer.createMovie(year, title);
+    }
 }
