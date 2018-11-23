@@ -48,4 +48,9 @@ public class MovieRecModel
         Movie movie = logiclayer.createMovie(year, title);
         movieList.add(movie);
     }
+    
+    public void deleteMovie(Movie movie) {
+        logiclayer.deleteMovie(movie);
+        movieList.remove(movie);
+    }
 }

@@ -47,6 +47,16 @@ public class MovieRecController implements Initializable
     private Label lblUpdateOutput;
     @FXML
     private Button btnCreateMovie;
+    @FXML
+    private TextField txtDeleteMovieId;
+    @FXML
+    private TextField txtDeleteMovieName;
+    @FXML
+    private TextField txtDeleteMovieYear;
+    @FXML
+    private Button btnDelteMovie;
+    @FXML
+    private Label lblMovieDeleteOutput;
     
     public MovieRecController() throws MovieRecSysException {
         try {
@@ -80,6 +90,16 @@ public class MovieRecController implements Initializable
         movieModel.createMovie(movieYear, movieName);
         lblUpdateOutput.setText("Added " + movieName + " to database");
         
+    }
+
+    @FXML
+    private void DeleteMovieHandler(ActionEvent event)
+    {
+        int movieId = Integer.parseInt(txtDeleteMovieId.getText());
+        String movieTitle = txtDeleteMovieName.getText();
+        int movieYear = Integer.parseInt(txtDeleteMovieYear.getText());
+        movieModel.deleteMovie(new Movie(movieId,movieYear,movieTitle));
+        lblMovieDeleteOutput.setText(movieTitle + " has been deleted");
     }
 
 }

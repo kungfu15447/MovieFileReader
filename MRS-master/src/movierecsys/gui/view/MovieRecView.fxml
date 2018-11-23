@@ -27,5 +27,14 @@
       <Label layoutX="439.0" layoutY="193.0" text="Release year of the movie" />
       <Label fx:id="lblUpdateOutput" layoutX="439.0" layoutY="307.0" prefHeight="50.0" prefWidth="222.0" />
       <Button fx:id="btnCreateMovie" layoutX="441.0" layoutY="255.0" mnemonicParsing="false" onAction="#CreateMovieHandler" text="Create movie" />
+      <Label layoutX="419.0" layoutY="364.0" prefHeight="18.0" prefWidth="153.0" text="Delete a movie" />
+      <TextField fx:id="txtDeleteMovieId" layoutX="433.0" layoutY="426.0" />
+      <TextField fx:id="txtDeleteMovieName" layoutX="433.0" layoutY="487.0" />
+      <TextField fx:id="txtDeleteMovieYear" layoutX="433.0" layoutY="550.0" />
+      <Label layoutX="428.0" layoutY="397.0" text="ID of the movie" />
+      <Label layoutX="433.0" layoutY="461.0" prefHeight="18.0" prefWidth="125.0" text="Name of the movie" />
+      <Label layoutX="433.0" layoutY="522.0" prefHeight="18.0" prefWidth="153.0" text="Release year of the movie" />
+      <Label fx:id="lblMovieDeleteOutput" layoutX="433.0" layoutY="593.0" prefHeight="50.0" prefWidth="222.0" />
+      <Button fx:id="btnDelteMovie" layoutX="615.0" layoutY="547.0" mnemonicParsing="false" onAction="#DeleteMovieHandler" prefHeight="32.0" prefWidth="113.0" text="Delete movie" />
    </children>
 </AnchorPane>
