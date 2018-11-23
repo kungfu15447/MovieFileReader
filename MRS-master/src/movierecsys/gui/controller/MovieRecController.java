@@ -78,7 +78,7 @@ public class MovieRecController implements Initializable
         String movieName = txtMovieName.getText();
         int movieYear = Integer.parseInt(txtMovieYear.getText());
         movieModel.createMovie(movieYear, movieName);
-        lblUpdateOutput.setText("The movie " + movieName + " has been put into the Movie database!");
+        lblUpdateOutput.setText("Added " + movieName + " to database");
         
     }
 

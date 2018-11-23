@@ -59,9 +59,7 @@ public class MRSManager implements MRSOwsLogicFacade {
     {
         try
         {
-            int id = dodao.getNextAvailableMovieID();
-            dodao.createMovie(year, title);
-            return new Movie(id, year, title);
+            return dodao.createMovie(year, title);
         } catch (IOException ex)
         {
             
@@ -115,7 +113,7 @@ public class MRSManager implements MRSOwsLogicFacade {
     public List<Movie> getAllMovies() throws MovieRecSysException
     {
         try {
-        return modao.getAllMovies();
+        return dodao.getAllMovies();
         }
         catch (IOException x) {
             throw new MovieRecSysException("Could not show all movies becuase of error: " + x);

@@ -31,19 +31,21 @@ public class MovieDBDAO implements IMovieRepository
     @Override
     public Movie createMovie(int releaseYear, String title) throws IOException
     {
-        int id = getNextAvailableMovieID();
+        
         try (Connection con = dbc.getConnection()) {
+            int id = getNextAvailableMovieID();
             Statement statement = con.createStatement();
             String sql = "INSERT INTO Movie (id,year,title) VALUES("
                     + id + ","
                     + releaseYear + ",'"
                     + title + "');";
             statement.executeUpdate(sql);
+            Movie movie = new Movie(id, releaseYear, title);
+            return movie;
         }catch (SQLException ex) {
             ex.printStackTrace();
         }
-        Movie movie = new Movie(id, releaseYear, title);
-        return movie;
+        return null;
     }
 
     @Override

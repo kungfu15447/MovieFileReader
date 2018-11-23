@@ -8,7 +8,6 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="662.0" prefWidth="935.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="movierecsys.gui.controller.MovieRecController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutY="14.0" maxWidth="1.7976931348623157E308" prefHeight="39.0" prefWidth="473.0" text="Movie Recommendation System" textAlignment="CENTER">
@@ -26,7 +25,7 @@
       <Label layoutX="439.0" layoutY="81.0" prefHeight="39.0" prefWidth="183.0" text="Create a movie" />
       <Label layoutX="439.0" layoutY="134.0" text="Name of the movie" />
       <Label layoutX="439.0" layoutY="193.0" text="Release year of the movie" />
-      <Label fx:id="lblUpdateOutput" layoutX="439.0" layoutY="307.0" prefHeight="50.0" prefWidth="222.0" text="Label" />
+      <Label fx:id="lblUpdateOutput" layoutX="439.0" layoutY="307.0" prefHeight="50.0" prefWidth="222.0" />
       <Button fx:id="btnCreateMovie" layoutX="441.0" layoutY="255.0" mnemonicParsing="false" onAction="#CreateMovieHandler" text="Create movie" />
    </children>
 </AnchorPane>
