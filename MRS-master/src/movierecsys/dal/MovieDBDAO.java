@@ -31,17 +31,17 @@ public class MovieDBDAO implements IMovieRepository
     @Override
     public Movie createMovie(int releaseYear, String title) throws IOException
     {
-        
+        String sql = "INSERT INTO Movie VALUES (?,?)";
         try (Connection con = dbc.getConnection()) {
-            int id = getNextAvailableMovieID();
-            Statement statement = con.createStatement();
-            String sql = "INSERT INTO Movie (id,year,title) VALUES("
-                    + id + ","
-                    + releaseYear + ",'"
-                    + title + "');";
-            statement.executeUpdate(sql);
-            Movie movie = new Movie(id, releaseYear, title);
-            return movie;
+            PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, releaseYear);
+            statement.setString(2, title);
+            int id = 0;
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+            return new Movie(id,releaseYear,title);
         }catch (SQLException ex) {
             ex.printStackTrace();
         }
